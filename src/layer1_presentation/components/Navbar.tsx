@@ -238,6 +238,23 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span>Horarios</span>
           </button>
 
+          {/* Botón directo al Portal Oficial SAES UPIICSA (Calificaciones) */}
+          <button
+            onClick={() => handleTabClick('saes')}
+            className={`btn btn-sm ${activeTab === 'saes' ? 'btn-gold' : 'btn-secondary'}`}
+            style={{ 
+              borderRadius: 'var(--radius-full)', 
+              whiteSpace: 'nowrap',
+              backgroundColor: activeTab === 'saes' ? '#f2780c' : undefined,
+              color: activeTab === 'saes' ? '#ffffff' : undefined,
+              borderColor: '#f2780c',
+              fontWeight: 700
+            }}
+            title="Vista oficial con diseño idéntico al SAES UPIICSA para consulta de calificaciones"
+          >
+            <span>🏛️ Portal SAES (Calificaciones)</span>
+          </button>
+
           {/* Botón especial del Visor de Arquitectura SISAE */}
           <button
             onClick={onOpenLayerInspector}
@@ -376,6 +393,14 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             <CalendarDays size={18} />
             <span>Horarios CELEX</span>
+          </button>
+
+          <button
+            onClick={() => handleTabClick('saes')}
+            className="btn btn-block"
+            style={{ backgroundColor: '#f2780c', color: '#ffffff', fontWeight: 700 }}
+          >
+            <span>🏛️ Portal SAES (Calificaciones Oficiales)</span>
           </button>
 
           <button

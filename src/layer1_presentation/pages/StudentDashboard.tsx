@@ -46,6 +46,7 @@ interface StudentDashboardProps {
   onViewActivityDetails: (activity: CelexCourse) => void;
   onRefreshData: () => void;
   onOpenPreRegister: () => void;
+  onOpenSaes?: () => void;
 }
 
 export const StudentDashboard: React.FC<StudentDashboardProps> = ({
@@ -54,7 +55,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   enrollments,
   onViewActivityDetails,
   onRefreshData,
-  onOpenPreRegister
+  onOpenPreRegister,
+  onOpenSaes
 }) => {
   const [activeTab, setActiveTab] = useState<'SOLICITUDES' | 'MIS_CURSOS' | 'CALIFICACIONES' | 'REQUISITOS' | 'MI_HORARIO' | 'HISTORIAL' | 'PERFIL'>('SOLICITUDES');
   const [selectedReceipt, setSelectedReceipt] = useState<Enrollment | null>(null);
@@ -312,6 +314,23 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             <GraduationCap size={16} />
             <span>Historial & Titulación</span>
           </button>
+
+          {onOpenSaes && (
+            <button
+              onClick={onOpenSaes}
+              className="btn btn-sm"
+              style={{
+                borderRadius: 'var(--radius-full)',
+                backgroundColor: '#fff7ed',
+                borderColor: '#f2780c',
+                color: '#c2410c',
+                fontWeight: 700
+              }}
+              title="Abrir boleta de calificaciones en la vista oficial con diseño SAES UPIICSA"
+            >
+              <span>🏛️ Vista SAES UPIICSA</span>
+            </button>
+          )}
 
           <button
             onClick={onOpenPreRegister}
@@ -730,6 +749,65 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         {/* PESTAÑA: CALIFICACIONES POR ORDINARIOS (RF-26, RF-27, RN-05, DD-15) */}
         {activeTab === 'CALIFICACIONES' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            {/* Banner Destacado para abrir la Vista Auténtica SAES UPIICSA */}
+            <div style={{
+              background: 'linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)',
+              border: '2px solid #f2780c',
+              borderRadius: 'var(--radius-md)',
+              padding: '1.25rem 1.5rem',
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '1rem',
+              boxShadow: '0 4px 12px rgba(242, 120, 12, 0.15)'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <div style={{
+                  backgroundColor: '#f2780c',
+                  color: '#ffffff',
+                  fontSize: '1.5rem',
+                  padding: '0.5rem 0.85rem',
+                  borderRadius: '8px',
+                  fontWeight: 900,
+                  letterSpacing: '1px'
+                }}>
+                  SAES
+                </div>
+                <div>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#9a3412', margin: '0 0 0.25rem 0' }}>
+                    ¿Deseas consultar tu boleta con el formato auténtico del SAES UPIICSA?
+                  </h3>
+                  <p style={{ margin: 0, fontSize: '0.85rem', color: '#c2410c' }}>
+                    Visualiza tus materias curriculares, grupos de idiomas, profesores y cadena de validación criptográfica en el portal oficial SAES.
+                  </p>
+                </div>
+              </div>
+
+              {onOpenSaes && (
+                <button
+                  onClick={onOpenSaes}
+                  style={{
+                    backgroundColor: '#f2780c',
+                    color: '#ffffff',
+                    border: 'none',
+                    borderRadius: 'var(--radius-full)',
+                    padding: '0.65rem 1.4rem',
+                    fontWeight: 800,
+                    cursor: 'pointer',
+                    fontSize: '0.875rem',
+                    boxShadow: '0 2px 8px rgba(242, 120, 12, 0.35)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem'
+                  }}
+                >
+                  <span>🏛️ Abrir en Formato SAES Oficial</span>
+                  <span>→</span>
+                </button>
+              )}
+            </div>
+
             <div>
               <h2 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '0.35rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <Award size={24} color="var(--ipn-guinda)" />

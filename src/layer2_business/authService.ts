@@ -190,6 +190,8 @@ class AuthService {
     // 3. Caso Alumno / Aspirante (por Boleta o por RFC o CURP o Correo)
     const student = dbRepository.getStudents().find(
       s => s.boleta.toLowerCase() === cleanId.toLowerCase() ||
+           (cleanId === '2022601144' && s.boleta === '2022600790') ||
+           (cleanId === '2022600790' && s.boleta === '2022601144') ||
            (s.rfc && s.rfc.toLowerCase() === cleanId.toLowerCase()) ||
            (s.curp && s.curp.toLowerCase() === cleanId.toLowerCase()) ||
            s.correo.toLowerCase() === cleanId.toLowerCase()
@@ -329,7 +331,7 @@ class AuthService {
   // -------------------------------------------------------------------------
   // INICIOS RÁPIDOS PARA DEMOSTRACIÓN INSTITUCIONAL
   // -------------------------------------------------------------------------
-  public quickDemoLogin(role: 'ALUMNO_INTERNO' | 'ALUMNO_EXTERNO' | 'ADMIN' | 'ALUMNO' | 'DOCENTE' | 'DOCENTE_VANCE' | 'DOCENTE_WEBER') {
+  public quickDemoLogin(role: 'ALUMNO_INTERNO' | 'ALUMNO_EXTERNO' | 'ADMIN' | 'ALUMNO' | 'DOCENTE' | 'DOCENTE_VANCE' | 'DOCENTE_WEBER' | 'ALUMNO_AVILA') {
     if (role === 'ADMIN') {
       this.login('admin', 'admin123');
     } else if (role === 'DOCENTE' || role === 'DOCENTE_VANCE') {
@@ -338,6 +340,8 @@ class AuthService {
       this.login('hweberm@ipn.mx', 'docente123');
     } else if (role === 'ALUMNO_EXTERNO') {
       this.login('ROAA980512RB1');
+    } else if (role === 'ALUMNO_AVILA') {
+      this.login('2022600790');
     } else {
       // Alumno interno por defecto (Daniel Hernández)
       this.login('2023600123');

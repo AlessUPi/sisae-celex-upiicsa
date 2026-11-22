@@ -5,6 +5,7 @@ import { HomePage } from './layer1_presentation/pages/HomePage';
 import { StudentDashboard } from './layer1_presentation/pages/StudentDashboard';
 import { AdminDashboard } from './layer1_presentation/pages/AdminDashboard';
 import { TeacherDashboard } from './layer1_presentation/pages/TeacherDashboard';
+import { SaesPortalView } from './layer1_presentation/pages/SaesPortalView';
 import { AuthModal } from './layer1_presentation/components/AuthModal';
 import { ActivityDetailModal } from './layer1_presentation/components/ActivityDetailModal';
 import { PreRegistrationModal } from './layer1_presentation/components/PreRegistrationModal';
@@ -55,6 +56,8 @@ export default function App() {
     
     if (hash === 'alumno' || path.endsWith('/alumno')) {
       setActiveTab('alumno');
+    } else if (hash === 'saes' || path.endsWith('/saes')) {
+      setActiveTab('saes');
     } else if (hash === 'docente' || path.endsWith('/docente')) {
       setActiveTab('docente');
     } else if (hash === 'admin' || path.endsWith('/admin')) {
@@ -206,6 +209,20 @@ export default function App() {
             onViewActivityDetails={(act) => setSelectedActivity(act)}
             onRefreshData={refreshData}
             onOpenPreRegister={() => handleStartPreRegister()}
+            onOpenSaes={() => setActiveTab('saes')}
+          />
+        )}
+
+        {activeTab === 'saes' && (
+          <SaesPortalView
+            session={session}
+            enrollments={enrollments}
+            students={students}
+            onBackToSisae={() => setActiveTab('alumno')}
+            onSelectCourseDetails={(courseId) => {
+              const act = activities.find(a => a.id === courseId);
+              if (act) setSelectedActivity(act);
+            }}
           />
         )}
 

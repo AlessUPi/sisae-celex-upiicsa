@@ -91,7 +91,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     }
   };
 
-  const handleDemoLogin = (role: 'ALUMNO_INTERNO' | 'ALUMNO_EXTERNO' | 'ADMIN' | 'DOCENTE' | 'DOCENTE_VANCE' | 'DOCENTE_WEBER') => {
+  const handleDemoLogin = (role: 'ALUMNO_INTERNO' | 'ALUMNO_EXTERNO' | 'ADMIN' | 'DOCENTE' | 'DOCENTE_VANCE' | 'DOCENTE_WEBER' | 'ALUMNO_AVILA') => {
     authService.quickDemoLogin(role);
     onSuccess();
     onClose();
@@ -267,6 +267,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   <span>Accesos Rápidos de Prueba (Sin Contraseña):</span>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
+                  <button
+                    type="button"
+                    onClick={() => handleDemoLogin('ALUMNO_AVILA')}
+                    className="btn btn-sm btn-secondary"
+                    style={{ justifyContent: 'center', borderColor: '#f2780c', backgroundColor: '#fff7ed' }}
+                  >
+                    🎓 Demo Alumno SAES (Alejandro Avila Morales - 2022600790)
+                  </button>
+
                   <button
                     type="button"
                     onClick={() => handleDemoLogin('ALUMNO_INTERNO')}
