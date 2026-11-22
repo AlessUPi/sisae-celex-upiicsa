@@ -91,7 +91,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     }
   };
 
-  const handleDemoLogin = (role: 'ALUMNO_INTERNO' | 'ALUMNO_EXTERNO' | 'ADMIN') => {
+  const handleDemoLogin = (role: 'ALUMNO_INTERNO' | 'ALUMNO_EXTERNO' | 'ADMIN' | 'DOCENTE' | 'DOCENTE_VANCE' | 'DOCENTE_WEBER') => {
     authService.quickDemoLogin(role);
     onSuccess();
     onClose();
@@ -221,12 +221,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             <form onSubmit={handleLoginSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div>
                 <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.35rem' }}>
-                  Boleta IPN (10 dígitos), RFC o Usuario Admin *
+                  Boleta IPN (10 dígitos), RFC, Correo institucional o ID Docente *
                 </label>
                 <input
                   type="text"
                   className="input-field"
-                  placeholder="Ej. 2023600123, HERA030415XX8 o admin"
+                  placeholder="Ej. 2023600123, rvanceg@ipn.mx, prof-01 o admin"
                   value={loginId}
                   onChange={(e) => setLoginId(e.target.value)}
                   required
@@ -246,7 +246,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   required
                 />
                 <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                  (Para cuenta de coordinador UDI usa: admin123)
+                  (Admin: admin123 | Docentes: docente123)
                 </span>
               </div>
 
@@ -283,6 +283,24 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     style={{ justifyContent: 'center' }}
                   >
                     🌐 Demo Usuario Externo RFC (Fernanda Hernández)
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handleDemoLogin('DOCENTE_VANCE')}
+                    className="btn btn-sm btn-secondary"
+                    style={{ justifyContent: 'center', borderColor: 'var(--ipn-guinda)' }}
+                  >
+                    👨‍🏫 Demo Docente CELEX (Mtro. Robert Vance - Inglés)
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handleDemoLogin('DOCENTE_WEBER')}
+                    className="btn btn-sm btn-secondary"
+                    style={{ justifyContent: 'center', borderColor: 'var(--ipn-guinda)' }}
+                  >
+                    👨‍🏫 Demo Docente CELEX (Dr. Hans Weber - Alemán)
                   </button>
 
                   <button

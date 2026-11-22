@@ -145,7 +145,49 @@ class AuthService {
       }
     }
 
-    // 2. Caso Alumno / Aspirante (por Boleta o por RFC o CURP o Correo)
+    // 2. Caso Docente / Profesor CELEX (por ID prof-01, correo @ipn.mx, o nombre)
+    const teacher = dbRepository.getTeachers().find(
+      t => t.id.toLowerCase() === cleanId.toLowerCase() ||
+           t.correo.toLowerCase() === cleanId.toLowerCase() ||
+           t.nombreCompleto.toLowerCase().includes(cleanId.toLowerCase())
+    );
+
+    if (teacher) {
+      if (!password || password === 'docente123' || password === teacher.password || password === 'admin' || password === 'ipn12345') {
+        this.session = {
+          user: {
+            id: teacher.id,
+            identificador: teacher.correo,
+            nombre: teacher.nombreCompleto,
+            correo: teacher.correo,
+            rol: 'DOCENTE',
+            teacherId: teacher.id,
+            especialidad: teacher.especialidad,
+            certificaciones: teacher.certificaciones,
+            avatarUrl: teacher.avatarUrl
+          },
+          token: `jwt-sisae-doc-${Date.now()}`,
+          isAuthenticated: true
+        };
+
+        dbRepository.addAuditLog({
+          usuario: `${teacher.nombreCompleto} (Docente CELEX)`,
+          rol: 'DOCENTE',
+          accion: 'LOGIN_DOCENTE_SUCCESS',
+          ipOrigen: '148.204.64.18 (Red Académica CELEX)',
+          detalles: `Inicio de sesión exitoso en el portal docente de calificaciones ordinarias CELEX.`,
+          modulo: 'CELEX',
+          nivelSeguridad: 'SUCCESS'
+        });
+
+        this.notify();
+        return { success: true, message: `Bienvenido(a) Prof(a). ${teacher.nombreCompleto}`, session: this.session };
+      } else {
+        return { success: false, message: 'Contraseña de docente incorrecta (Usa "docente123").' };
+      }
+    }
+
+    // 3. Caso Alumno / Aspirante (por Boleta o por RFC o CURP o Correo)
     const student = dbRepository.getStudents().find(
       s => s.boleta.toLowerCase() === cleanId.toLowerCase() ||
            (s.rfc && s.rfc.toLowerCase() === cleanId.toLowerCase()) ||
@@ -287,13 +329,17 @@ class AuthService {
   // -------------------------------------------------------------------------
   // INICIOS RÁPIDOS PARA DEMOSTRACIÓN INSTITUCIONAL
   // -------------------------------------------------------------------------
-  public quickDemoLogin(role: 'ALUMNO_INTERNO' | 'ALUMNO_EXTERNO' | 'ADMIN' | 'ALUMNO') {
+  public quickDemoLogin(role: 'ALUMNO_INTERNO' | 'ALUMNO_EXTERNO' | 'ADMIN' | 'ALUMNO' | 'DOCENTE' | 'DOCENTE_VANCE' | 'DOCENTE_WEBER') {
     if (role === 'ADMIN') {
       this.login('admin', 'admin123');
+    } else if (role === 'DOCENTE' || role === 'DOCENTE_VANCE') {
+      this.login('rvanceg@ipn.mx', 'docente123');
+    } else if (role === 'DOCENTE_WEBER') {
+      this.login('hweberm@ipn.mx', 'docente123');
     } else if (role === 'ALUMNO_EXTERNO') {
       this.login('ROAA980512RB1');
     } else {
-      // Alumno interno por defecto
+      // Alumno interno por defecto (Daniel Hernández)
       this.login('2023600123');
     }
   }

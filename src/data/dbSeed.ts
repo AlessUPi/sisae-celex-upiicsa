@@ -19,7 +19,8 @@ export const SEED_TEACHERS: Teacher[] = [
     telefono: '55 5624 2000 ext. 70201',
     semblanza: 'Más de 16 años de trayectoria académica en la enseñanza de lenguas anglosajonas y coordinación de exámenes de certificación para titulación en el IPN.',
     activo: true,
-    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80'
+    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+    password: 'docente123'
   },
   {
     id: 'prof-02',
@@ -31,7 +32,8 @@ export const SEED_TEACHERS: Teacher[] = [
     telefono: '55 5624 2000 ext. 70202',
     semblanza: 'Especialista en pedagogía para estudiantes de áreas tecnológicas e ingenierías en UPIICSA, orientada a la fluidez oral y redacción técnica.',
     activo: true,
-    avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80'
+    avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+    password: 'docente123'
   },
   {
     id: 'prof-03',
@@ -43,7 +45,8 @@ export const SEED_TEACHERS: Teacher[] = [
     telefono: '55 5624 2000 ext. 70203',
     semblanza: 'Docente francófona con vasta experiencia en programas de movilidad estudiantil México-Francia (MEXFITEC) en escuelas de ingeniería politécnicas.',
     activo: true,
-    avatarUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80'
+    avatarUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
+    password: 'docente123'
   },
   {
     id: 'prof-04',
@@ -55,7 +58,8 @@ export const SEED_TEACHERS: Teacher[] = [
     telefono: '55 5624 2000 ext. 70204',
     semblanza: 'Ingeniero y lingüista con experiencia en vinculación académica entre instituciones tecnológicas alemanas y la comunidad politécnica.',
     activo: true,
-    avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80'
+    avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
+    password: 'docente123'
   },
   {
     id: 'prof-05',
@@ -67,7 +71,8 @@ export const SEED_TEACHERS: Teacher[] = [
     telefono: '55 5624 2000 ext. 70205',
     semblanza: 'Docente titular de los cursos de italiano en CELEX UPIICSA desde 2018, enfocado en inmersión comunicativa y literatura contemporánea.',
     activo: true,
-    avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80'
+    avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80',
+    password: 'docente123'
   }
 ];
 
@@ -472,14 +477,145 @@ export const SEED_ENROLLMENTS: Enrollment[] = [
     idioma: 'Alemán',
     nivel: 'Básico 1',
     grupo: 'ALE-B1-01',
+    profesorId: 'prof-04',
     profesorNombre: 'Dr. Hans Weber Müller',
     horarioTexto: 'Mar y Jue 13:00 - 15:00',
     salon: 'Edificio CELEX - Aula 202',
     fechaInscripcion: '19/01/2026',
-    estado: 'INSCRITO',
-    porcentajeAsistencia: 100,
+    estado: 'ACREDITADO',
+    porcentajeAsistencia: 95,
+    calificacionOConstancia: '87/100 - Acreditado',
+    evaluacion: {
+      primerOrdinario: 88,
+      segundoOrdinario: 85,
+      tareasActividades: 90,
+      calificacionFinal: 87,
+      acreditado: true,
+      publicada: true,
+      oportunidad: 1,
+      observacionesDocente: 'Excelente pronunciación técnica y dominio de estructuras sintácticas de nivel A1.',
+      fechaEvaluacion: '18/02/2026',
+      docenteNombre: 'Dr. Hans Weber Müller'
+    },
     referenciaBancariaValidada: 'BBVA-REF-773912',
     montoPagado: 850
+  },
+  {
+    id: 'enr-02',
+    folio: 'SISAE-CELEX-2026-0841',
+    alumnoId: 'alu-01',
+    alumnoBoleta: '2023600123',
+    alumnoRfc: 'HERA030415XX8',
+    alumnoCurp: 'HERA030415HDFRRD04',
+    alumnoNombre: 'Daniel Hernández Rodríguez',
+    alumnoTipo: 'INTERNO_IPN',
+    alumnoCarrera: 'Licenciatura en Ciencias de la Informática',
+    actividadId: 'celex-ing-02',
+    actividadNombre: 'Inglés Básico 2 (Regular)',
+    actividadCategoria: 'Inglés',
+    idioma: 'Inglés',
+    nivel: 'Básico 2',
+    grupo: 'ING-B2-02',
+    profesorId: 'prof-02',
+    profesorNombre: 'Lic. Brenda Morales Estrada',
+    horarioTexto: 'Lun a Jue 13:00 - 15:00',
+    salon: 'Edificio CELEX - Aula 102',
+    fechaInscripcion: '22/01/2026',
+    estado: 'ACREDITADO',
+    porcentajeAsistencia: 92,
+    calificacionOConstancia: '84/100 - Acreditado',
+    evaluacion: {
+      primerOrdinario: 80,
+      segundoOrdinario: 85,
+      tareasActividades: 90,
+      calificacionFinal: 84,
+      acreditado: true,
+      publicada: true,
+      oportunidad: 1,
+      observacionesDocente: 'Muy buen trabajo en composiciones escritas y participación oral constante.',
+      fechaEvaluacion: '19/02/2026',
+      docenteNombre: 'Lic. Brenda Morales Estrada'
+    },
+    referenciaBancariaValidada: 'BBVA-REF-902148',
+    montoPagado: 850
+  },
+  {
+    id: 'enr-03',
+    folio: 'SISAE-CELEX-2026-0845',
+    alumnoId: 'alu-01',
+    alumnoBoleta: '2023600123',
+    alumnoRfc: 'HERA030415XX8',
+    alumnoCurp: 'HERA030415HDFRRD04',
+    alumnoNombre: 'Daniel Hernández Rodríguez',
+    alumnoTipo: 'INTERNO_IPN',
+    alumnoCarrera: 'Licenciatura en Ciencias de la Informática',
+    actividadId: 'celex-ing-05',
+    actividadNombre: 'Inglés Avanzado 1 (Intensivo TOEFL)',
+    actividadCategoria: 'Inglés',
+    idioma: 'Inglés',
+    nivel: 'Avanzado 1',
+    grupo: 'ING-AV1-01',
+    profesorId: 'prof-01',
+    profesorNombre: 'Mtro. Robert Vance Gallagher',
+    horarioTexto: 'Sábados 08:00 - 13:00',
+    salon: 'Lab Multimedia de Idiomas 1',
+    fechaInscripcion: '24/01/2026',
+    estado: 'EN_CURSO',
+    porcentajeAsistencia: 100,
+    calificacionOConstancia: 'En Evaluación',
+    evaluacion: {
+      primerOrdinario: 86,
+      segundoOrdinario: 90,
+      tareasActividades: 92,
+      calificacionFinal: 89,
+      acreditado: true,
+      publicada: false, // Borrador listo para que el docente publique
+      oportunidad: 1,
+      observacionesDocente: 'Dominio avanzado de vocabulario académico para examen internacional TOEFL ITP.',
+      fechaEvaluacion: '20/02/2026',
+      docenteNombre: 'Mtro. Robert Vance Gallagher'
+    },
+    referenciaBancariaValidada: 'BBVA-REF-902155',
+    montoPagado: 850
+  },
+  {
+    id: 'enr-04',
+    folio: 'SISAE-CELEX-2026-0842',
+    alumnoId: 'alu-03',
+    alumnoBoleta: 'ROAA980512RB1',
+    alumnoRfc: 'ROAA980512RB1',
+    alumnoCurp: 'ROAA980512MDFRRB01',
+    alumnoNombre: 'Fernanda Joanna Hernández González',
+    alumnoTipo: 'EXTERNO',
+    alumnoCarrera: 'Público Externo / Otra Institución',
+    actividadId: 'celex-fra-01',
+    actividadNombre: 'Francés Básico 1 (Regular)',
+    actividadCategoria: 'Francés',
+    idioma: 'Francés',
+    nivel: 'Básico 1',
+    grupo: 'FRA-B1-01',
+    profesorId: 'prof-03',
+    profesorNombre: 'Mtra. Élodie Fournier Renard',
+    horarioTexto: 'Lun y Mié 14:00 - 16:00',
+    salon: 'Edificio CELEX - Aula 201',
+    fechaInscripcion: '21/01/2026',
+    estado: 'ACREDITADO',
+    porcentajeAsistencia: 98,
+    calificacionOConstancia: '93/100 - Acreditado',
+    evaluacion: {
+      primerOrdinario: 94,
+      segundoOrdinario: 90,
+      tareasActividades: 96,
+      calificacionFinal: 93,
+      acreditado: true,
+      publicada: true,
+      oportunidad: 1,
+      observacionesDocente: 'Participation très active en cours, prononciation claire et rigoureuse.',
+      fechaEvaluacion: '19/02/2026',
+      docenteNombre: 'Mtra. Élodie Fournier Renard'
+    },
+    referenciaBancariaValidada: 'BBVA-REF-114872',
+    montoPagado: 1450
   }
 ];
 

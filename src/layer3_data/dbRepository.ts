@@ -10,7 +10,8 @@ import type {
   Enrollment, 
   Announcement, 
   PreRegistrationRequest, 
-  AuditSecurityLog 
+  AuditSecurityLog,
+  EvaluationRecord 
 } from '../types';
 
 import { 
@@ -25,14 +26,14 @@ import {
 import { supabase } from './supabaseClient';
 
 const STORAGE_KEYS = {
-  STUDENTS: 'sisae_celex_alumnos_v2',
-  TEACHERS: 'sisae_celex_profesores_v2',
-  ACTIVITIES: 'sisae_celex_cursos_v2',
-  REQUESTS: 'sisae_celex_solicitudes_v2',
-  ENROLLMENTS: 'sisae_celex_inscripciones_v2',
-  ANNOUNCEMENTS: 'sisae_celex_anuncios_v2',
-  AUDIT_LOGS: 'sisae_celex_auditoria_v2',
-  INITIALIZED: 'sisae_celex_initialized_v2'
+  STUDENTS: 'sisae_celex_alumnos_v3',
+  TEACHERS: 'sisae_celex_profesores_v3',
+  ACTIVITIES: 'sisae_celex_cursos_v3',
+  REQUESTS: 'sisae_celex_solicitudes_v3',
+  ENROLLMENTS: 'sisae_celex_inscripciones_v3',
+  ANNOUNCEMENTS: 'sisae_celex_anuncios_v3',
+  AUDIT_LOGS: 'sisae_celex_auditoria_v3',
+  INITIALIZED: 'sisae_celex_initialized_v3'
 };
 
 class DataRepository {
@@ -454,6 +455,50 @@ class DataRepository {
     });
 
     return enrollment;
+  }
+
+  public updateEnrollmentEvaluation(enrollmentId: string, evaluacion: EvaluationRecord): Enrollment | undefined {
+    const enrollments = this.getEnrollments();
+    const index = enrollments.findIndex(e => e.id === enrollmentId);
+    if (index >= 0) {
+      enrollments[index].evaluacion = evaluacion;
+      if (evaluacion.calificacionFinal !== undefined) {
+        enrollments[index].calificacionOConstancia = evaluacion.acreditado
+          ? `${evaluacion.calificacionFinal}/100 - Acreditado`
+          : `${evaluacion.calificacionFinal}/100 - No Acreditado`;
+        if (evaluacion.acreditado) {
+          enrollments[index].estado = 'ACREDITADO';
+        }
+      }
+      localStorage.setItem(STORAGE_KEYS.ENROLLMENTS, JSON.stringify(enrollments));
+      this.notifyListeners();
+      return enrollments[index];
+    }
+    return undefined;
+  }
+
+  public publishEnrollmentsByGroup(grupo: string, publicada: boolean): number {
+    const enrollments = this.getEnrollments();
+    let updated = 0;
+    enrollments.forEach(e => {
+      if (e.grupo === grupo) {
+        if (e.evaluacion) {
+          e.evaluacion.publicada = publicada;
+        } else {
+          e.evaluacion = {
+            publicada,
+            oportunidad: 1,
+            fechaEvaluacion: new Date().toLocaleDateString('es-MX')
+          };
+        }
+        updated++;
+      }
+    });
+    if (updated > 0) {
+      localStorage.setItem(STORAGE_KEYS.ENROLLMENTS, JSON.stringify(enrollments));
+      this.notifyListeners();
+    }
+    return updated;
   }
 
   public deleteEnrollment(id: string): boolean {

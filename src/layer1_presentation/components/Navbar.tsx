@@ -7,12 +7,13 @@ import {
   ShieldCheck, 
   Sun, 
   Moon, 
-  BookOpen,
-  CalendarDays,
-  BellRing,
-  Menu,
-  X,
-  FileCheck2
+  BookOpen, 
+  CalendarDays, 
+  BellRing, 
+  Menu, 
+  X, 
+  FileCheck2,
+  Award
 } from 'lucide-react';
 import type { AuthSession } from '../../types';
 import logoIpn from '../../assets/logo_ipn.png';
@@ -279,6 +280,15 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <ShieldCheck size={16} color="#9e7b1a" />
                   <span>Coordinador UDI</span>
                 </button>
+              ) : session.user.rol === 'DOCENTE' ? (
+                <button
+                  onClick={() => handleTabClick('docente')}
+                  className={`btn btn-sm ${activeTab === 'docente' ? 'btn-primary' : 'btn-secondary'}`}
+                  style={{ borderRadius: 'var(--radius-full)' }}
+                >
+                  <Award size={16} />
+                  <span>Portal Docente (Calificaciones)</span>
+                </button>
               ) : (
                 <button
                   onClick={() => handleTabClick('alumno')}
@@ -399,12 +409,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {session.isAuthenticated && session.user ? (
             <button
-              onClick={() => handleTabClick(session.user?.rol === 'ADMIN' ? 'admin' : 'alumno')}
+              onClick={() => handleTabClick(session.user?.rol === 'ADMIN' ? 'admin' : session.user?.rol === 'DOCENTE' ? 'docente' : 'alumno')}
               className="btn btn-primary btn-block"
               style={{ marginTop: '0.5rem' }}
             >
-              {session.user.rol === 'ADMIN' ? <ShieldCheck size={18} /> : <UserCheck size={18} />}
-              <span>{session.user.rol === 'ADMIN' ? 'Panel de Coordinación UDI' : 'Mi Portal del Alumno'}</span>
+              {session.user.rol === 'ADMIN' ? <ShieldCheck size={18} /> : session.user.rol === 'DOCENTE' ? <Award size={18} /> : <UserCheck size={18} />}
+              <span>{session.user.rol === 'ADMIN' ? 'Panel de Coordinación UDI' : session.user.rol === 'DOCENTE' ? 'Portal Docente (Calificaciones)' : 'Mi Portal del Alumno'}</span>
             </button>
           ) : (
             <button

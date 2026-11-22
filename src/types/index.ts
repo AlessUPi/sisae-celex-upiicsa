@@ -83,6 +83,7 @@ export interface Teacher {
   semblanza: string;
   activo: boolean;
   avatarUrl?: string;
+  password?: string;
 }
 
 export interface CelexCourse {
@@ -156,6 +157,35 @@ export interface PreRegistrationRequest {
   };
 }
 
+export interface EvaluationRecord {
+  primerOrdinario?: number;      // 0 - 100 (Examen Medio / 1er Parcial Ordinario)
+  segundoOrdinario?: number;     // 0 - 100 (Examen Final / 2do Parcial Ordinario)
+  tareasActividades?: number;    // 0 - 100 (Evaluación Continua / Tareas / Asistencia)
+  calificacionFinal?: number;    // 0 - 100 (Calificación Total)
+  acreditado?: boolean;          // Total >= 80 (RF-27, RN-05)
+  publicada: boolean;            // Si fue liberada para consulta del alumno (DD-15)
+  oportunidad: number;           // 1, 2 o 3 (RN-06: 3 oportunidades antes de examen ubicación)
+  observacionesDocente?: string; // Comentarios / retroalimentación del profesor
+  fechaEvaluacion?: string;      // Fecha de registro
+  docenteNombre?: string;        // Nombre del profesor que asentó
+}
+
+export interface AcademicProgressInfo {
+  nivelActual: string;
+  siguienteNivel: string;
+  puedeAvanzar: boolean;
+  motivoBloqueo?: string;
+  oportunidadesUsadas: number;   // 1, 2 o 3
+  maxOportunidades: number;      // 3
+  requiereExamenUbicacion: boolean; // Si llegó al 3er intento no acreditado
+  elegibleBajaTemporal: boolean; // RN-07: solo a partir de Intermedio 1 aprobado
+  bajaTemporalDetalle: string;
+  constanciaBasicoElegible: boolean; // RN-09: 5 módulos básicos
+  constanciaBasicoProgreso: number;  // Ej: 3 de 5 módulos
+  requisitoTitulacionCumplido: boolean;
+  creditosTotales: number;
+}
+
 export interface Enrollment {
   id: string;
   folio: string;                 // Ej: "SISAE-CELEX-2026-0842"
@@ -172,6 +202,7 @@ export interface Enrollment {
   idioma: LanguageCategory;
   nivel: string;
   grupo: string;                 // Ej: "1CE01", "ING-B2-03"
+  profesorId?: string;
   profesorNombre: string;
   horarioTexto: string;
   salon: string;
@@ -179,6 +210,7 @@ export interface Enrollment {
   estado: EnrollmentStatus;
   porcentajeAsistencia: number;  // 0 - 100
   calificacionOConstancia?: string;
+  evaluacion?: EvaluationRecord;  // Calificaciones por ordinarios
   referenciaBancariaValidada: string;
   montoPagado: number;
   qrCodeUrl?: string;
@@ -241,7 +273,7 @@ export interface AuditSecurityLog {
 export interface AuthSession {
   user: {
     id: string;
-    identificador: string;       // Boleta, RFC o usuario admin
+    identificador: string;       // Boleta, RFC, usuario admin o correo docente
     rfc?: string;
     curp?: string;
     nombre: string;
@@ -251,6 +283,10 @@ export interface AuthSession {
     carrera?: CareerUPIICSA;
     semestre?: number;
     turno?: TurnoType;
+    teacherId?: string;
+    especialidad?: string;
+    certificaciones?: string;
+    avatarUrl?: string;
   } | null;
   token?: string;                // JWT institucional simulado
   isAuthenticated: boolean;

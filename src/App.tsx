@@ -4,6 +4,7 @@ import { Footer } from './layer1_presentation/components/Footer';
 import { HomePage } from './layer1_presentation/pages/HomePage';
 import { StudentDashboard } from './layer1_presentation/pages/StudentDashboard';
 import { AdminDashboard } from './layer1_presentation/pages/AdminDashboard';
+import { TeacherDashboard } from './layer1_presentation/pages/TeacherDashboard';
 import { AuthModal } from './layer1_presentation/components/AuthModal';
 import { ActivityDetailModal } from './layer1_presentation/components/ActivityDetailModal';
 import { PreRegistrationModal } from './layer1_presentation/components/PreRegistrationModal';
@@ -54,6 +55,8 @@ export default function App() {
     
     if (hash === 'alumno' || path.endsWith('/alumno')) {
       setActiveTab('alumno');
+    } else if (hash === 'docente' || path.endsWith('/docente')) {
+      setActiveTab('docente');
     } else if (hash === 'admin' || path.endsWith('/admin')) {
       setActiveTab('admin');
     } else if (hash === 'horarios' || path.endsWith('/horarios')) {
@@ -206,6 +209,15 @@ export default function App() {
           />
         )}
 
+        {activeTab === 'docente' && (
+          <TeacherDashboard
+            session={session}
+            activities={activities}
+            enrollments={enrollments}
+            onRefreshData={refreshData}
+          />
+        )}
+
         {activeTab === 'admin' && (
           <AdminDashboard
             activities={activities}
@@ -230,6 +242,8 @@ export default function App() {
           const sess = authService.getSession();
           if (sess.user?.rol === 'ADMIN') {
             setActiveTab('admin');
+          } else if (sess.user?.rol === 'DOCENTE') {
+            setActiveTab('docente');
           } else if (sess.user?.rol === 'ALUMNO') {
             setActiveTab('alumno');
           }

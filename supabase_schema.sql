@@ -130,6 +130,14 @@ CREATE TABLE inscripciones_acreditadas (
     estado VARCHAR(30) DEFAULT 'INSCRITO',
     porcentaje_asistencia INT DEFAULT 0,
     calificacion_o_constancia VARCHAR(50),
+    -- Evaluaciones ordinarias y acreditación (RF-26, RF-27, RN-05, RN-06, DD-15)
+    calificacion_primer_ordinario INT DEFAULT NULL,
+    calificacion_segundo_ordinario INT DEFAULT NULL,
+    calificacion_actividades INT DEFAULT NULL,
+    calificacion_final INT DEFAULT NULL,
+    calificacion_publicada BOOLEAN DEFAULT FALSE,
+    numero_oportunidad INT DEFAULT 1,
+    observaciones_docente TEXT,
     referencia_bancaria_validada VARCHAR(50) NOT NULL,
     monto_pagado DECIMAL(10,2) NOT NULL
 );
